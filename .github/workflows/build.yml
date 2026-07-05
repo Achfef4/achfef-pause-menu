@@ -1,0 +1,23 @@
+name: Build Geode Mod
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract Project
+        run: |
+          unzip lists-in-pause-menu.zip -d .
+          mv lists-in-pause-menu/* . || true
+
+      - name: Build Mod
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          bindings: geode-sdk/bindings
+          android: true
+          
