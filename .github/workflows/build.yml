@@ -12,8 +12,12 @@ jobs:
 
       - name: Extract Project
         run: |
-          unzip lists-in-pause-menu.zip -d .
-          mv lists-in-pause-menu/* . || true
+          find . -name "*.zip" -exec unzip -o {} -d . \; || true
+          find . -name "mod.json" -exec dirname {} \; | while read dir; do
+            if [ "$dir" != "." ]; then
+              cp -r "$dir"/* . || true
+            fi
+          done
 
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
